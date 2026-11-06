@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#143b33">
+  <meta name="description" content="Przejrzysty katalog konkursów literackich i naborów dla piszących. Filtruj po gatunku, terminie, nagrodach i formie.">
+  <title>Mapa konkursów literackich — dla Oazy Czytelników</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#results">Przejdź do wyników</a>
+  <header class="hero">
+    <div class="hero-ring ring-one" aria-hidden="true"></div>
+    <div class="hero-ring ring-two" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="masthead">
+        <div class="brand"><span class="brand-icon" aria-hidden="true">✳</span><span>Mapa literacka</span></div>
+        <span class="community-label">dla społeczności Oazy Czytelników</span>
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow">KONKURSY · NABORY · SCENA</span>
+        <h1>Znajdź dobre miejsce<br>dla <em>swojego tekstu.</em></h1>
+        <p>Proza, poezja, fantastyka, scenariusze i więcej. Jedna lista, którą możesz przeszukiwać, filtrować i podawać dalej.</p>
+      </div>
+      <div class="hero-foot">
+        <span><strong id="total-hero">52</strong> pozycji w zestawieniu</span>
+        <span class="hero-divider"></span>
+        <span>Stan danych: <strong>6 listopada 2026</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="finder" aria-labelledby="finder-heading">
+      <div class="finder-heading-row">
+        <div>
+          <span class="section-kicker">TWOJA WYSZUKIWARKA</span>
+          <h2 id="finder-heading">Co chcesz napisać?</h2>
+        </div>
+        <button class="text-button" type="button" id="clear-filters">Wyczyść filtry <span aria-hidden="true">↺</span></button>
+      </div>
+
+      <label class="search-field" for="search-input">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+        <input type="search" id="search-input" autocomplete="off" placeholder="Wpisz nazwę, gatunek, miasto lub temat…">
+        <kbd>/</kbd>
+      </label>
+
+      <div class="categories" role="group" aria-label="Rodzaj twórczości">
+        <button type="button" class="category active" data-category="Wszystkie" aria-pressed="true">Wszystkie <span id="count-all">52</span></button>
+        <button type="button" class="category" data-category="Proza" aria-pressed="false">Proza</button>
+        <button type="button" class="category" data-category="Poezja" aria-pressed="false">Poezja</button>
+        <button type="button" class="category" data-category="Inne" aria-pressed="false">Inne formy</button>
+      </div>
+
+      <div class="filter-grid">
+        <label class="select-label">Gatunek / temat
+          <select id="genre-filter"><option value="">Wszystkie gatunki</option></select>
+        </label>
+        <label class="select-label">Rodzaj zgłoszenia
+          <select id="type-filter">
+            <option value="">Wszystkie typy</option>
+            <option value="Konkurs">Konkurs</option>
+            <option value="Nabór">Nabór wydawniczy</option>
+            <option value="Na scenie">Występ na żywo</option>
+            <option value="Scenariusze">Scenariusze / serial</option>
+            <option value="Program">Program debiutancki</option>
+          </select>
+        </label>
+        <label class="select-label">Nagroda
+          <select id="prize-filter">
+            <option value="">Dowolna nagroda</option>
+            <option value="Pieniądze">Pieniężna</option>
+            <option value="Publikacja">Publikacja</option>
+            <option value="Rzeczowe / inne">Rzeczowa / inne</option>
+            <option value="pln1000">Co najmniej 1 000 zł za główną nagrodę*</option>
+            <option value="pln5000">Co najmniej 5 000 zł za główną nagrodę*</option>
+            <option value="pln10000">Co najmniej 10 000 zł za główną nagrodę*</option>
+          </select>
+        </label>
+        <label class="select-label">Termin
+          <select id="date-filter">
+            <option value="">Wszystkie terminy</option>
+            <option value="week">Najbliższe 7 dni</option>
+            <option value="month">Najbliższe 30 dni</option>
+            <option value="none">Bez podanego terminu</option>
+          </select>
+        </label>
+        <label class="select-label">Wpisowe
+          <select id="fee-filter">
+            <option value="">Dowolne wpisowe</option>
+            <option value="bezpłatne">Potwierdzone bezpłatne</option>
+            <option value="płatne">Płatne</option>
+            <option value="niepotwierdzone">Niepotwierdzone</option>
+          </select>
+        </label>
+        <label class="select-label">Język
+          <select id="lang-filter">
+            <option value="">Wszystkie języki</option>
+            <option value="polski">Polski (także mieszane)</option>
+            <option value="angielski">Angielski (także mieszane)</option>
+          </select>
+        </label>
+      </div>
+      <div class="filter-note">* Filtr kwot obejmuje tylko jednoznacznie podaną najwyższą nagrodę pieniężną w PLN, nie łączną pulę ani wartość nagród rzeczowych.</div>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="results-heading">
+      <div class="results-toolbar">
+        <div>
+          <span class="section-kicker">PRZEGLĄD OGŁOSZEŃ</span>
+          <h2 id="results-heading">Dostępne możliwości <span class="results-count" id="results-count">52</span></h2>
+        </div>
+        <div class="results-controls">
+          <label class="sort-label" for="sort-filter">Sortuj
+            <select id="sort-filter">
+              <option value="soon">Najbliższy termin</option>
+              <option value="later">Najpóźniejszy termin</option>
+              <option value="prize">Nagroda główna w PLN</option>
+              <option value="alpha">Nazwa A–Z</option>
+            </select>
+          </label>
+          <button id="share-filters" class="share-button" type="button" title="Kopiuj link z aktualnymi filtrami">Udostępnij widok <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+      <div class="toggle-strip">
+        <label class="check-option"><input type="checkbox" id="show-expired"><span>Pokaż po terminie</span></label>
+        <label class="check-option"><input type="checkbox" id="only-favorites"><span>★ Tylko zapisane</span></label>
+        <span class="snapshot-tag" id="snapshot-tag">Zestawienie aktualizowane ręcznie</span>
+      </div>
+
+      <div class="list-header" aria-hidden="true">
+        <span>Ogłoszenie / tematyka</span><span>Termin</span><span>Nagroda</span><span></span>
+      </div>
+      <div id="entries" class="entries" aria-live="polite" aria-busy="true"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-symbol">✧</div>
+        <h3>Nie znaleziono pasujących ogłoszeń</h3>
+        <p>Spróbuj usunąć jeden z filtrów albo włączyć zakończone nabory.</p>
+        <button type="button" id="empty-reset" class="primary-button">Wyczyść filtry</button>
+      </div>
+    </section>
+
+    <aside class="disclaimer" aria-label="Ważna informacja">
+      <div class="disclaimer-symbol">i</div>
+      <div><strong>Zanim wyślesz tekst</strong><p>To nieoficjalny, ręcznie opracowany katalog na podstawie informacji dostępnych 6.11.2026. Daty, nagrody i warunki mogą się zmienić. Zawsze przeczytaj regulamin organizatora. Wpisowe oznaczone jako „niepotwierdzone” nie musi być bezpłatne. Występy sceniczne wymagają zwykle obecności na miejscu, a część konkursów ma dodatkowe wymogi osobowe lub publikacyjne.</p></div>
+    </aside>
+  </main>
+
+  <footer class="site-footer"><div class="wrap footer-inner"><span><span aria-hidden="true">✳</span> Mapa literacka · nieoficjalne zestawienie dla Oazy Czytelników</span><span>Bez konta, reklam i śledzenia. Zapisane ogłoszenia zostają tylko w tej przeglądarce.</span></div></footer>
+
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <div class="dialog-header"><span class="dialog-overline">SZCZEGÓŁY OGŁOSZENIA</span><button type="button" id="close-detail" class="close-detail" aria-label="Zamknij szczegóły">×</button></div>
+    <div class="dialog-content" id="detail-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

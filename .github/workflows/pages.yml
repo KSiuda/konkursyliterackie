@@ -1,0 +1,60 @@
+name: Publish literary contests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate catalogue data
+        run: |
+          python3 - <<'PY'
+          import json
+          from datetime import date
+          from pathlib import Path
+
+          data = json.loads(Path('docs/data.json').read_text(encoding='utf-8'))
+          entries = data['entries']
+          assert entries, 'The catalogue is empty'
+          ids = [entry['id'] for entry in entries]
+          assert len(ids) == len(set(ids)), 'Duplicate competition IDs'
+          assert all(entry.get('title') and entry.get('categories') for entry in entries), 'Missing title/categories'
+          assert all(set(entry['categories']) <= {'Proza', 'Poezja', 'Inne'} for entry in entries), 'Unknown category'
+          assert all(entry.get('deadline') is None or date.fromisoformat(entry['deadline']) for entry in entries), 'Invalid date'
+          for path in ('index.html', 'app.js', 'styles.css'):
+              assert (Path('docs') / path).is_file(), f'Missing {path}'
+          print(f'Validated {len(entries)} catalogue entries')
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
